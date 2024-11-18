@@ -1,15 +1,13 @@
-import React, { useEffect, useState } from 'react'
-import axios from 'axios'
-import { useParams } from 'react-router-dom'
-import BackButton from '../components/BackButton'
-import Spinner from '../components/Spinner'
-
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import { useParams } from 'react-router-dom';
+import BackButton from '../components/BackButton';
+import Spinner from '../components/Spinner';
 
 const ShowBook = () => {
   const [book, setBook] = useState({});
   const [loading, setLoading] = useState(false);
   const { id } = useParams();
-  console.log(id);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -28,41 +26,49 @@ const ShowBook = () => {
   }, [id]);
 
   return (
-    <div className='p-4'>
-      <BackButton />
-      <h1 className='text-3xl my-4'>Show Book</h1>
-      {loading ? (
-        <Spinner />
-      ) : (
-        <div className='flex flex-col border-2 border-sky-400 rounded-x1 w-fit p-4'>
-          <div className='my-4'>
-            <span className='text-xl mr-4 text-gray-500'>Id</span>
-            <span>{book._id}</span>
+    <div
+      className="min-h-screen flex items-center justify-center p-6 bg-cover bg-center"
+      style={{
+        backgroundImage:
+          "url('https://images.unsplash.com/photo-1531257243402-3f6f9d326f4a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1500&q=80')",
+      }}
+    >
+      <div className="bg-white/90 backdrop-blur-lg shadow-xl rounded-2xl p-8 max-w-xl w-full">
+        <BackButton />
+        <h1 className="text-4xl font-bold text-sky-700 text-center mb-8">Book Details</h1>
+        {loading ? (
+          <Spinner />
+        ) : (
+          <div className="flex flex-col space-y-6 text-gray-700">
+            <div className="flex justify-between">
+              <span className="text-lg font-semibold">ID:</span>
+              <span className="text-lg">{book._id}</span>
+            </div>
+            <div className="flex justify-between">
+              <span className="text-lg font-semibold">Title:</span>
+              <span className="text-lg">{book.title}</span>
+            </div>
+            <div className="flex justify-between">
+              <span className="text-lg font-semibold">Author:</span>
+              <span className="text-lg">{book.author}</span>
+            </div>
+            <div className="flex justify-between">
+              <span className="text-lg font-semibold">Publish Year:</span>
+              <span className="text-lg">{book.publishYear}</span>
+            </div>
+            <div className="flex justify-between">
+              <span className="text-lg font-semibold">Created At:</span>
+              <span className="text-lg">{new Date(book.createdAt).toLocaleString()}</span>
+            </div>
+            <div className="flex justify-between">
+              <span className="text-lg font-semibold">Last Updated:</span>
+              <span className="text-lg">{new Date(book.updatedAt).toLocaleString()}</span>
+            </div>
           </div>
-          <div className='my-4'>
-            <span className='text-xl mr-4 text-gray-500'>Title</span>
-            <span>{book.title}</span>
-          </div>
-          <div className='my-4'>
-            <span className='text-xl mr-4 text-gray-500'>Author</span>
-            <span>{book.author}</span>
-          </div>
-          <div className='my-4'>
-            <span className='text-xl mr-4 text-gray-500'>Publish Year</span>
-            <span>{book.publishYear}</span>
-          </div>
-          <div className='my-4'>
-            <span className='text-xl mr-4 text-gray-500'>Create Time</span>
-            <span>{new Date(book.createdAt).toString()}</span>
-          </div>
-          <div className='my-4'>
-            <span className='text-xl mr-4 text-gray-500'>Last Update Time</span>
-            <span>{new Date(book.updatedAt).toString()}</span>
-          </div>
-        </div>
-      )}
+        )}
+      </div>
     </div>
-  )
-}
+  );
+};
 
 export default ShowBook;

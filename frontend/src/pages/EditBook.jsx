@@ -26,13 +26,13 @@ const EditBook = () => {
         setLoading(false);
       } catch (error) {
         setLoading(false);
-        alert('An error happened. Pls check console');
+        enqueueSnackbar('Error fetching book details', { variant: 'error' });
         console.log(error);
       }
     };
 
     fetchData();
-  }, [id]);
+  }, [id, enqueueSnackbar]);
 
   const handleEditBook = async () => {
     const data = {
@@ -48,47 +48,61 @@ const EditBook = () => {
       navigate('/');
     } catch (error) {
       setLoading(false);
-      enqueueSnackbar('Error', { variant: 'error' });
+      enqueueSnackbar('Error editing book', { variant: 'error' });
       console.log(error);
     }
   };
 
   return (
-    <div className="p-4">
-      <BackButton />
-      <h1 className="text-3xl my-4">Edit Book</h1>
-      {loading ? <Spinner /> : ''}
-      <div className="flex flex-col border-2 border-sky-400 rounded-xl w-[600px] p-4 mx-auto">
-        <div className="my-4">
-          <label className="text-xl mr-4 text-gray-500">Title</label>
-          <input
-            type="text"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            className="border-2 border-gray-500 px-4 py-2 w-full"
-          />
+    <div
+      className="min-h-screen flex items-center justify-center p-6 bg-cover bg-center"
+      style={{
+        backgroundImage:
+          "url('https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0?ixlib=rb-4.0.3&auto=format&fit=crop&w=1500&q=80')",
+      }}
+    >
+      <div className="bg-white/80 backdrop-blur-lg shadow-lg rounded-2xl w-full max-w-lg p-8">
+        <BackButton />
+        <h1 className="text-4xl font-semibold text-sky-700 text-center mb-8">Edit Book</h1>
+        {loading && <Spinner />}
+        <div className="space-y-6">
+          <div>
+            <label className="block text-lg font-medium text-gray-600 mb-2">Title</label>
+            <input
+              type="text"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              className="border border-gray-300 rounded-lg px-4 py-2 w-full focus:outline-none focus:ring-2 focus:ring-sky-300"
+              placeholder="Enter book title"
+            />
+          </div>
+          <div>
+            <label className="block text-lg font-medium text-gray-600 mb-2">Author</label>
+            <input
+              type="text"
+              value={author}
+              onChange={(e) => setAuthor(e.target.value)}
+              className="border border-gray-300 rounded-lg px-4 py-2 w-full focus:outline-none focus:ring-2 focus:ring-sky-300"
+              placeholder="Enter author's name"
+            />
+          </div>
+          <div>
+            <label className="block text-lg font-medium text-gray-600 mb-2">Publish Year</label>
+            <input
+              type="text"
+              value={publishYear}
+              onChange={(e) => setPublishYear(e.target.value)}
+              className="border border-gray-300 rounded-lg px-4 py-2 w-full focus:outline-none focus:ring-2 focus:ring-sky-300"
+              placeholder="Enter publish year"
+            />
+          </div>
+          <button
+            className="w-full bg-sky-500 hover:bg-sky-600 text-white font-bold py-3 rounded-lg mt-6 transition duration-300"
+            onClick={handleEditBook}
+          >
+            Save Changes
+          </button>
         </div>
-        <div className="my-4">
-          <label className="text-xl mr-4 text-gray-500">Author</label>
-          <input
-            type="text"
-            value={author}
-            onChange={(e) => setAuthor(e.target.value)}
-            className="border-2 border-gray-500 px-4 py-2 w-full"
-          />
-        </div>
-        <div className="my-4">
-          <label className="text-xl mr-4 text-gray-500">Publish Year</label>
-          <input
-            type="text"
-            value={publishYear}
-            onChange={(e) => setPublishYear(e.target.value)}
-            className="border-2 border-gray-500 px-4 py-2 w-full"
-          />
-        </div>
-        <button className="p-2 bg-sky-300 m-8" onClick={handleEditBook}>
-          Save
-        </button>
       </div>
     </div>
   );
