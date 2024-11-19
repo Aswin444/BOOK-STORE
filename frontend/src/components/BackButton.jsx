@@ -2,6 +2,7 @@ import React from 'react'
 import { BsArrowLeft } from 'react-icons/bs'
 import { Link } from 'react-router-dom'
 
+console.log('BackButton component rendered');
 
 const BackButton = ({ destination = '/' }) => {
   return (
